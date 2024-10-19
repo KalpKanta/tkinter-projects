@@ -7,6 +7,10 @@ screen.geometry("800x600")
 screen.configure(background = "white")
 screen.title("mathmatical table")
 
+choice = tk.IntVar()
+choice.set(0)
+
+
 label1 = tk.Label(screen, text = "Mathmatical table")
 label1.place(x = 325, y = 0)
 
@@ -17,12 +21,6 @@ numbers = tkinter.ttk.Combobox(screen)
 numbers["values"] = number
 numbers.place(x = 310, y = 100)
 
-button = tk.Button(screen, text = "Generate")
-button.place(x = 345, y = 200)
-
-choice = tk.IntVar()
-choice.set(0)
-
 button10 = tk.Radiobutton(screen, text = "10", variable = choice, value = 10)
 button10.place(x = 600, y = 100)
 
@@ -31,4 +29,17 @@ button20.place(x = 600, y = 150)
 
 button30 = tk.Radiobutton(screen, text = "30", variable = choice, value = 30)
 button30.place(x = 600, y = 200)
+
+label3 = tk.Label(screen, text = "hi")
+label3.place(x = 375, y = 300)
+
+def start_calc():
+    number = numbers.get()
+    number2 = choice.get()
+    for i in range(1, number2 + 1):
+        print(number, "x", i, "= ", int(number) * i)
+
+button = tk.Button(screen, text = "Generate", command = start_calc)
+button.place(x = 345, y = 200)
+
 screen.mainloop()
