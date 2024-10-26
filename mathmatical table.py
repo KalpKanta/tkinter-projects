@@ -30,14 +30,18 @@ button20.place(x = 600, y = 150)
 button30 = tk.Radiobutton(screen, text = "30", variable = choice, value = 30)
 button30.place(x = 600, y = 200)
 
-label3 = tk.Label(screen, text = "hi")
+label3 = tk.Label(screen, text = "")
 label3.place(x = 375, y = 300)
 
+table = ""
+
 def start_calc():
+    global table
     number = numbers.get()
     number2 = choice.get()
     for i in range(1, number2 + 1):
-        print(number, "x", i, "= ", int(number) * i)
+        table = table + str(number) + "x" + str(i) + "= " + str(int(number) * i) + "\n"
+    label3.config(text = table)
 
 button = tk.Button(screen, text = "Generate", command = start_calc)
 button.place(x = 345, y = 200)
