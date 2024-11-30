@@ -1,9 +1,10 @@
 import tkinter as tk
 import time
+import tkinter.messagebox
 
 window = tk.Tk()
-window.title = ("Stopwatch")
-window.geometry = ("600x800")
+window.title("Stopwatch")
+window.geometry("600x800")
 
 def starts():
     hn = int(h.get())
@@ -11,10 +12,20 @@ def starts():
     sn = int(s.get())
 
     ts = hn*3600 + mn*60 + sn
-    while ts >= 00:
+    while ts > 00:
         ts = ts - 1
-        print(ts)
-#time.sleep(1)
+        hn = ts//3600
+        mn = ts%3600//60
+        sn = ts%60
+        h1.set(hn)
+        m1.set(mn)
+        s1.set(sn)
+        window.update()
+        time.sleep(1)
+
+    if ts == 0:
+        tkinter.messagebox.showinfo("END", "Your timer has finished")
+
 
 
 h1 = tk.StringVar()
