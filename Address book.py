@@ -1,4 +1,6 @@
 import tkinter as tk
+import tkinter.filedialog
+import tkinter.messagebox
 
 window = tk.Tk()
 window.title("My Address Book")
@@ -6,6 +8,20 @@ window.geometry("600x600")
 
 ab = {}
 
+def save():
+    savef = tkinter.filedialog.asksaveasfile()
+    if savef is not None:
+        print(ab, file = savef)
+        contact_listbox.delete(0, tk.END)
+
+def open():
+    global ab
+    savef =tkinter.filedialog.askopenfile()
+    if savef is not None:
+        ab = eval(savef.read())
+        updatelb()
+
+        
 def updatelb():
     k = ab.keys()
     contact_listbox.delete(0,tk.END)
@@ -13,6 +29,7 @@ def updatelb():
         contact_listbox.insert(tk.END, key)
 
 def add():
+    
     n = name_entry.get()
     a = address_entry.get()
     m = mobile_entry.get()
@@ -27,6 +44,12 @@ def delete():
     name = contact_listbox.get(d)
     del ab[name]
     updatelb()
+
+def show_info(event):
+    sd = contact_listbox.get(tk.ACTIVE)
+    record = ab.get(sd)
+    tkinter.messagebox.showinfo(sd, "Name: " + sd + "\nAddress: " + record[0] + "\nMobile: " + record[1] + "\nEmail: " + record[2] + "\nBirthday: " + record[3])
+    
 name_label = tk.Label(window, text="Name:")
 name_entry = tk.Entry(window)
 
@@ -42,11 +65,11 @@ email_entry = tk.Entry(window)
 birthday_label = tk.Label(window, text="Birthday:")
 birthday_entry = tk.Entry(window)
 
-open_button = tk.Button(window, text="Open")
+open_button = tk.Button(window, text="Open", command = open)
 edit_button = tk.Button(window, text="Edit")
 delete_button = tk.Button(window, text="Delete", command = delete)
 update_add_button = tk.Button(window, text="Update/Add", command = add)
-save_button = tk.Button(window, text="Save")
+save_button = tk.Button(window, text="Save", command = save)
 
 contact_listbox = tk.Listbox(window, width=50, height=30)
 
@@ -68,5 +91,6 @@ update_add_button.grid(row=5, column=3)
 save_button.grid(row=6, column=1, columnspan=3)
 
 contact_listbox.grid(row=0, column=3, rowspan=5, padx=10, pady=10)
+contact_listbox.bind('<<ListboxSelect>>', show_info)
 
 window.mainloop()
