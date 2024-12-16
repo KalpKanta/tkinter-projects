@@ -49,7 +49,16 @@ def show_info(event):
     sd = contact_listbox.get(tk.ACTIVE)
     record = ab.get(sd)
     tkinter.messagebox.showinfo(sd, "Name: " + sd + "\nAddress: " + record[0] + "\nMobile: " + record[1] + "\nEmail: " + record[2] + "\nBirthday: " + record[3])
-    
+
+def edit():
+    sd = contact_listbox.get(tk.ACTIVE)
+    record = ab.get(sd)
+    name_entry.insert(0, sd)
+    address_entry.insert(0, record[0])
+    mobile_entry.insert(0, record[1])
+    email_entry.insert(0, record[2])
+    birthday_entry.insert(0, record[3])
+
 name_label = tk.Label(window, text="Name:")
 name_entry = tk.Entry(window)
 
@@ -66,7 +75,7 @@ birthday_label = tk.Label(window, text="Birthday:")
 birthday_entry = tk.Entry(window)
 
 open_button = tk.Button(window, text="Open", command = open)
-edit_button = tk.Button(window, text="Edit")
+edit_button = tk.Button(window, text="Edit", command = edit)
 delete_button = tk.Button(window, text="Delete", command = delete)
 update_add_button = tk.Button(window, text="Update/Add", command = add)
 save_button = tk.Button(window, text="Save", command = save)
