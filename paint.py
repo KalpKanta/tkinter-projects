@@ -23,16 +23,24 @@ class Paint():
         self.root.mainloop()
 
     def pen1(self):
-        pass
+        self.activate_button(self.pen)
+        self.eraseron = False
 
     def brush1(self):
-        pass
+        self.activate_button(self.brush)
+        self.eraseron = False
 
     def color1(self):
         self.pcolor = askcolor()[1]
 
     def eraser1(self):
+        self.activate_button(self.eraser)
         self.eraseron = True
+
+    def activate_button(self, sbutton):
+        self.activeb.config(relief = tk.RAISED)
+        self.activeb = sbutton
+        self.activeb.config(relief = tk.SUNKEN)
 
 
     def draw(self, event):
