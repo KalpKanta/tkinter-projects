@@ -10,16 +10,18 @@ canvas = tk.Canvas(window, width = 800, height = 600, bg = "black")
 canvas.grid(row = 0, column = 0)
 canvas.create_line(400, 0, 400, 600, fill = "White", width=2)
 canvas.create_oval(300, 200, 500, 400, outline="White")
-scoreboard = canvas.create_text(400, 20, text = "0:0", fill = "white", font = ("times new roman", 30,"bold"))
+scoreboard = canvas.create_text(400, 20, text = "0 : 0", fill = "white", font = ("times new roman", 30,"bold"))
 
 class Ball():
-    def __init__(self):
+    def __init__(self, p1, p2):
         self.ball = canvas.create_oval(400, 300, 420, 320, fill="white")
         self.directions = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]
         self.changex = random.choice(self.directions)
         self.changey = random.choice(self.directions)
         self.score1 = 0
         self.score2 = 0
+        self.p1 = p1
+        self.p2 = p2
 
     def draw(self):
         canvas.move(self.ball, self.changex, self.changey)
@@ -34,6 +36,18 @@ class Ball():
             self.changey = -4
         if self.cords[1] <= 0:
             self.changey = 4
+        canvas.itemconfig(scoreboard, text = str(self.score1) + " : " + str(self.score2))
+        
+
+    def bounce(self):
+        self.p1c = canvas.coords(self.p1.p1)
+        self.p2c = canvas.coords(self.p2.p2)
+        if self.cords[1] <= self.p1c[3] and self.cords[3] >= self.p1c[1]:
+           if self.cords[0] <= self.p1c[2] and self.cords[2] >= self.p1c[0]:
+               self.changex = 4
+        if self.cords[1] <= self.p2c[3] and self.cords[3] >= self.p2c[1]:
+            if self.cords[2] <= self.p2c[2] and self.cords[2] >= self.p2c[0]:
+                self.changex = -4
 
 class Player1():
     def __init__(self):
@@ -81,11 +95,12 @@ class Player2():
 
 p1 = Player1()
 p2 = Player2()
-ball1 = Ball()
+ball1 = Ball(p1, p2)
 while True:
     ball1.draw()
     p1.draw()
     p2.draw()
+    ball1.bounce()
     window.update_idletasks()
     window.update()
     time.sleep(0.01)
